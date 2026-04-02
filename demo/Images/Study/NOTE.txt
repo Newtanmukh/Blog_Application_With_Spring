@@ -48,8 +48,21 @@ to be performed on a given resource. like GET,PUT,DELETE.
 * Http Response codes: whether a HTTP Request has been successfully completed.
 
 
+for class : if class is
+
+abstract class So<T extends Summary>
+child will be
+newSo<T extends newClass> extends So<T>
+where newClass is child of T.
 
 
 
+if parent repo is
 
+ public interfact SummaryRepo<T extends Summary, ID> extends JpaRepository<T, ID>{}
+
+child is ,
+
+public interface EdcOnetimeSummary extends SummaryRepo<EdcSummary, Long>{}
+EDCSummary is child of Summary
 
