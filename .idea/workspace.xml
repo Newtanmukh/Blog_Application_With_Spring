@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="pom.xml modified.">
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="moved to another folders.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/Architecture.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/Architecture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/ClientRequirment.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/ClientRequirment.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/ER Diagram.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/ER Diagram.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/RequirmentTechnical.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/RequirmentTechnical.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/TechnologiesUsed.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/TechnologiesUsed.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/ClientServer.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/ClientServer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/HttpRequestMethods.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/HttpRequestMethods.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/HttpResponseCode.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/HttpResponseCode.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/NOTE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/NOTE.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/SubResource.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/SubResource.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/URI.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/URI.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/Main/DemoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +57,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.DemoApplication.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
@@ -94,6 +84,25 @@
       <option name="filePath" />
       <method v="2" />
     </configuration>
+    <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.Main.DemoApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.DemoApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -126,12 +135,21 @@
       <option name="project" value="LOCAL" />
       <updated>1775118347479</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="moved to another folders.">
+      <option name="closed" value="true" />
+      <created>1775118981220</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775118981220</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added specs" />
     <MESSAGE value="pom.xml modified." />
-    <option name="LAST_COMMIT_MESSAGE" value="pom.xml modified." />
+    <MESSAGE value="moved to another folders." />
+    <option name="LAST_COMMIT_MESSAGE" value="moved to another folders." />
   </component>
 </project>
