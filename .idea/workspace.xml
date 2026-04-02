@@ -4,9 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="added specs">
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="pom.xml modified.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/Architecture.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/Architecture.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/ClientRequirment.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/ClientRequirment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/ER Diagram.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/ER Diagram.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/RequirmentTechnical.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/RequirmentTechnical.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Requirement/TechnologiesUsed.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Requirement/TechnologiesUsed.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/ClientServer.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/ClientServer.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/HttpRequestMethods.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/HttpRequestMethods.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/HttpResponseCode.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/HttpResponseCode.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/NOTE.txt" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/NOTE.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/SubResource.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/SubResource.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/Images/Study/URI.png" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/URI.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/Main/DemoApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +81,8 @@
       <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\Images\Requirement" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\demo" />
+      <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring" />
       <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\demo\demo" />
       <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\Images\Requirement" />
       <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\Images\Study" />
@@ -105,11 +118,20 @@
       <option name="project" value="LOCAL" />
       <updated>1775113331949</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="pom.xml modified.">
+      <option name="closed" value="true" />
+      <created>1775118347479</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1775118347479</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added specs" />
-    <option name="LAST_COMMIT_MESSAGE" value="added specs" />
+    <MESSAGE value="pom.xml modified." />
+    <option name="LAST_COMMIT_MESSAGE" value="pom.xml modified." />
   </component>
 </project>
