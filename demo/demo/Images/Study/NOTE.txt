@@ -1,0 +1,55 @@
+REST: REpresentational State Transfer
+software architecture style to guide design of architecture for the web.
+
+RE : Representational (format)
+S : State (Data)
+T : Transfer (transfer data b/w two parties)
+
+server is producer, client is consumer.
+
+1)client & server should be independent, client should not know
+that in which language the APIs in the server are written and vice versa.
+
+
+2) Stateless: do not store any data in server. it should be stateless
+
+3) Cacheable: client can cache and reuse it.
+
+4) Layered architecture: load balancing by scalibility
+
+5) Uniform architecture: all interactions in unified way.
+
+6) Code on demand: client can download it and use server code !
+
+
+
+
+REST Concepts:
+
+* Resource : anything we want to expose to outside world, through our application
+Library management system, Book & User
+Student Management system, Student, teacher, class , subject
+
+
+* Sub-Resource :
+something that depends on main rsource.
+eg. : comments inside post.
+laptops inside Student.
+
+
+* URI : Uniform resource identifier,
+used to idenfity resource
+
+
+* Http Methods: defines set of request methods to indicate desired action
+to be performed on a given resource. like GET,PUT,DELETE.
+
+
+* Http Response codes: whether a HTTP Request has been successfully completed.
+
+
+
+
+
+
+
