@@ -66,3 +66,16 @@ child is ,
 public interface EdcOnetimeSummary extends SummaryRepo<EdcSummary, Long>{}
 EDCSummary is child of Summary
 
+
+Java Bean is validated with JSR380 known as Bean vlaidation 2.0.
+
+Specification to Java API For Bean validation.
+Properties of bean meet specific criteria.
+
+annotaitons used like @NotNull, @Min, @Size, @Max, @Email, @NotEmpty.
+
+How to Use: Spring Boot provides support for hibernate validator.
+
+Hibernate validator imp of validation API.
+
+

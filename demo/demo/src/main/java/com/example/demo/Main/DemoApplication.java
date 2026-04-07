@@ -1,5 +1,6 @@
 package com.example.demo.Main;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
@@ -20,4 +21,7 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
+	}
 }
