@@ -140,7 +140,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> searchPosts(String keyword) {
-        List<Post> posts = this.postRepo.findByTitle("%" + keyword + "%");
+        //List<Post> posts = this.postRepo.findByTitleContaining(keyword);
+        //Above, if in keyword some number is there it will throw InvalidDataApiException
+
+        List<Post> posts = this.postRepo.searchByTitle("%" + keyword + "%");
         return posts.stream().map((post) -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
 }
