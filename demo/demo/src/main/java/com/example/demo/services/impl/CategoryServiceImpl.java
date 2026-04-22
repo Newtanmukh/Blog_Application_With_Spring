@@ -29,8 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = categoryRepo.findById(categoryDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", categoryDto.getId()));
+    public CategoryDto updateCategory(Long catId, CategoryDto categoryDto) {
+        Category category = categoryRepo.findById(catId).orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", catId));
 
         category.setCategoryDescription(categoryDto.getCategoryDescription());
         category.setCategoryTitle(categoryDto.getCategoryTitle());
@@ -41,8 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(CategoryDto categoryDto) {
-        Category category = categoryRepo.findById(categoryDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", categoryDto.getId()));
+    public void deleteCategory(Long catId) {
+        Category category = categoryRepo.findById(catId).orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", catId));
         categoryRepo.delete(category);
     }
 
