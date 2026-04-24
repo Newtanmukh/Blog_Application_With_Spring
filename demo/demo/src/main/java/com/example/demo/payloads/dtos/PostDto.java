@@ -1,10 +1,13 @@
 package com.example.demo.payloads.dtos;
 
+import com.example.demo.entities.Comment;
 import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +24,5 @@ public class PostDto {
     //that's why we are using the dto classes instead of original classes(CategoryDto instead of Category etc.)
     private CategoryDto category;
     private UserDto user;
+    private Set<CommentDto> comments = new HashSet<>();
 }
