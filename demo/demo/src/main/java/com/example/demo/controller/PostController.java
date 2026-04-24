@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
@@ -59,7 +59,7 @@ public class PostController {
     }
 
     // get all posts
-    @GetMapping("/posts")
+    @GetMapping("/")
     public ResponseEntity<PostResponse> getAllPost(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "100", required = false) Integer pageSize,
