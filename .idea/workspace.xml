@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Post">
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Comment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/FileService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/FileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/PostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/PostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="WSOme part done, comment remainonhg." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -229,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776867292756</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="WSOme part done, comment remainonhg.">
+      <option name="closed" value="true" />
+      <created>1776872414751</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776872414751</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -243,6 +242,7 @@
     <MESSAGE value="Post , category APIS Done." />
     <MESSAGE value="worrkspace.xml" />
     <MESSAGE value="Post" />
-    <option name="LAST_COMMIT_MESSAGE" value="Post" />
+    <MESSAGE value="WSOme part done, comment remainonhg." />
+    <option name="LAST_COMMIT_MESSAGE" value="WSOme part done, comment remainonhg." />
   </component>
 </project>
