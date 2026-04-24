@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="WSOme part done, comment remainonhg.">
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/CommentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/payloads/dtos/CommentDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/repositories/CommentRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/CommentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/CommentServiceImpl.java" afterDir="false" />
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Comment API &amp; application.properties done.">
+      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/payloads/dtos/PostDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/payloads/dtos/PostDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/PostController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +244,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777023728392</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Comment API &amp; application.properties done.">
+      <option name="closed" value="true" />
+      <created>1777029632373</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1777029632373</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -267,6 +267,7 @@
     <MESSAGE value="worrkspace.xml" />
     <MESSAGE value="Post" />
     <MESSAGE value="WSOme part done, comment remainonhg." />
-    <option name="LAST_COMMIT_MESSAGE" value="WSOme part done, comment remainonhg." />
+    <MESSAGE value="Comment API &amp; application.properties done." />
+    <option name="LAST_COMMIT_MESSAGE" value="Comment API &amp; application.properties done." />
   </component>
 </project>
