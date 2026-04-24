@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="PostController.java">
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/repositories/RoleRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SQL/SQL_Queries.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/Main/DemoApplication.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/services/impl/PostServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +73,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.DemoApplication (1).executor": "Run",
     "Spring Boot.DemoApplication.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
@@ -93,11 +95,25 @@
       <recent name="C:\Users\newta\OneDrive\Desktop\REPO\Blog_Application_With_Spring\Images\Study" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.DemoApplication (1)">
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="Blog_Application_With_Spring" />
       <option name="filePath" />
       <method v="2" />
+    </configuration>
+    <configuration name="DemoApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="demo" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demo.DemoApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="DemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
@@ -115,6 +131,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.DemoApplication (1)" />
         <item itemvalue="Spring Boot.DemoApplication" />
       </list>
     </recent_temporary>
@@ -270,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777038902924</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="PostController.java">
+      <option name="closed" value="true" />
+      <created>1777044423508</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1777044423508</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
