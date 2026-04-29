@@ -8,6 +8,7 @@ It is written for a beginner and explains step-by-step what happens during authe
 - `demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java`
   - configures Spring Security using `SecurityFilterChain`
   - defines a `PasswordEncoder` bean (`BCryptPasswordEncoder`)
+  - permits `/api/posts` and `/api/posts/**` without authentication
 - `demo/demo/src/main/java/com/example/demo/services/impl/CustomUserDetailService.java`
   - implements `UserDetailsService`
   - loads user data from the database by email
@@ -89,6 +90,19 @@ Example:
 Important:
 - the encoded string changes every time you encode the same raw password because BCrypt salts the value.
 
+## User creation and password hashing
+
+In this project, `UserServiceImpl.createUser(...)` currently maps the DTO to a `User` and saves it directly.
+That means the password is saved exactly as provided by the user, not hashed.
+
+To make authentication work with `BCryptPasswordEncoder`, the password must be encoded before saving, for example:
+
+```java
+user.setPassword(passwordEncoder.encode(dto.getPassword()));
+```
+
+Otherwise the stored value is plain text and `BCryptPasswordEncoder.matches(rawPassword, storedHash)` will fail.
+
 ## Why field names do not matter
 
 Spring Security does not care about your actual entity field names.
@@ -135,7 +149,8 @@ That means:
   - CSRF disabled
   - form login enabled
   - HTTP Basic enabled
-  - all requests must be authenticated
+  - `/api/posts` and `/api/posts/**` are permitted without authentication
+  - all other requests must be authenticated
 
 ## Summary for a beginner
 
