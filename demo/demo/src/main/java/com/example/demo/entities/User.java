@@ -44,6 +44,11 @@ public class User extends SaveAuto implements UserDetails {
     }
 
     @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
     public boolean isEnabled(){
         return true;
     }
