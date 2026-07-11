@@ -4,7 +4,7 @@ Mostly used for securing REST APIs.
 
 Best way to communicate with client and server effectively.
 
-JWT Follows a stateless authenticaiton mechanism( Dont need to store anything in the server).
+JWT Follows a stateless authentication mechanism( Dont need to store anything in the server).
 
 
 
@@ -24,16 +24,16 @@ and then filter will  validate it and check if valid or not etc.
 
 
 
-Steps to implmenet JWT:
+Steps to implement JWT:
 * Add jwt dependency
-* Create JWT Autnehtication entry point implements AithenticationEntryPoint(Interface),
-this method will be called whenever Exception is thrown due to unauthroesd user
+* Create JWT Authentication entry point implements AuthenticationEntryPoint(Interface),
+this method will be called whenever Exception is thrown due to unauthorised user
 trying to authenticate and access API which requires authentication.
 It is invoked when authentication fails or when an unauthenticated
 user tries to access a protected resource.
 * JWT Token Helper : it has many methods for token related operations.
  like generate token, validate token, expired or not.
-* JWT Authencicatio Filter:  extends OnceRequestFilter.
+* JWT Authentication Filter:  extends OnceRequestFilter.
                     before API Reaches server, this filter will sit in between.
                     we can check here like, does this request have header or not, etc.
 
@@ -41,11 +41,11 @@ user tries to access a protected resource.
                     2) validate token
                     3) get user from token
                     4) load user associated with token
-                    5) set spring security (set authencitcation -> Spring security).
+                    5) set spring security (set authentication -> Spring security).
 
 
 * Create JWT Auth response : token, user details etc.
-* COnfigure JWT in Security Config.
+* Configure JWT in Security Config.
 * Create Login API To return token. : thats it, if correct username and password then token will be
  returned otherwise it will throw exception.
 * test application.
