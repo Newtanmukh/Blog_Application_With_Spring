@@ -37,7 +37,7 @@ user tries to access a protected resource.
                     before API Reaches server, this filter will sit in between.
                     we can check here like, does this request have header or not, etc.
 
-                    1) Get JWT Token from response
+                    1) Get JWT Token from request
                     2) validate token
                     3) get user from token
                     4) load user associated with token
@@ -54,11 +54,129 @@ user tries to access a protected resource.
 
 
 
+1. Login Request
+
+POST /api/v1/auth/login
+{
+  "username": "john",
+  "password": "1234"
+}
+
+Login Request
+    ↓
+AuthController
+    ↓
+AuthenticationManager.authenticate(...)
+    ↓
+DaoAuthenticationProvider
+    ↓
+CustomUserDetailService.loadUserByUsername(...)
+    ↓
+UserRepo.findByEmail(...) / find user
+    ↓
+UserDetails returned
+    ↓
+PasswordEncoder (BCrypt) compares passwords
+    ↓
+Authentication successful
+    ↓
+JwtTokenHelper.generateToken(...)
+    ↓
+JWT returned to client
 
 
 
 
 
 
+2. Protected API Request
+
+GET /api/user/posts
+Authorization: Bearer eyJhbGciOiJIUzI1Ni...
+
+
+
+API Request
+    ↓
+SecurityFilterChain
+    ↓
+JwtAuthenticationFilter
+    ↓
+Read Authorization header
+    ↓
+Extract JWT
+    ↓
+JwtTokenHelper.getUsernameFromToken(...)
+    ↓
+CustomUserDetailService.loadUserByUsername(...)
+    ↓
+JwtTokenHelper.validateToken(...)
+    ↓
+Create UsernamePasswordAuthenticationToken
+    ↓
+SecurityContextHolder.setAuthentication(...)
+    ↓
+Continue filter chain
+    ↓
+Spring Security sees authenticated user
+    ↓
+Controller executes
+    ↓
+Response returned
+
+
+SecurityContextHolder.setAuthentication(...)
+
+
+3. Invalid JWT Request
+
+GET /api/user/posts
+Authorization: Bearer invalid_token
+
+
+API Request
+    ↓
+JwtAuthenticationFilter
+    ↓
+Extract token
+    ↓
+Validate token
+    ↓
+Validation fails
+    ↓
+Authentication NOT set
+    ↓
+Request reaches Security layer
+    ↓
+User considered unauthenticated
+    ↓
+JwtAuthenticationEntryPoint
+    ↓
+401 Unauthorized
+
+
+
+
+
+
+
+4. Public Endpoint Request
+
+GET /api/posts
+
+In your SecurityConfig:
+.antMatchers(HttpMethod.GET)
+.permitAll()
+
+
+Request
+    ↓
+SecurityFilterChain
+    ↓
+No authentication required
+    ↓
+Controller
+    ↓
+Response
 
 
