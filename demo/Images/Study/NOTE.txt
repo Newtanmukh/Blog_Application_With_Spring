@@ -79,3 +79,116 @@ How to Use: Spring Boot provides support for hibernate validator.
 Hibernate validator imp of validation API.
 
 
+
+
+//
+when user is already logged in=>
+The SecurityContext is checked/restored in the filter chain,
+before the request reaches AuthenticationManager.
+
+AuthenticationManager is only involved when
+authentication is actually needed (such as a login attempt).
+
+
+
+  Login
+    ↓
+  AuthenticationManager
+    ↓
+  SecurityContext created
+    ↓
+  SecurityContext saved in HTTP Session
+    ↓
+  Future requests
+    ↓
+  Session restored
+    ↓
+  SecurityContextHolder populated
+    ↓
+  User recognized instantly
+
+
+
+
+
+
+
+
+
+  For a normal request (GET /profile, GET /posts, etc.)
+
+  Every request goes through the filter chain, and Spring checks whether a SecurityContext already exists for that user.
+
+  GET /profile
+      ↓
+  Filter Chain
+      ↓
+  Load SecurityContext from Session
+      ↓
+  Authentication found?
+      ↓
+  Yes → User is already logged in
+
+  No call to AuthenticationManager.
+  No password verification.
+  No loadUserByUsername().
+
+  For a login request (POST /login)
+
+  The filter chain sees that this is the login endpoint and triggers authentication.
+
+  POST /login
+      ↓
+  UsernamePasswordAuthenticationFilter
+      ↓
+  AuthenticationManager
+      ↓
+  DaoAuthenticationProvider
+      ↓
+  UserDetailsService
+
+  Here Spring is verifying credentials.
+
+  So what happens if John is already logged in and sends another normal request?
+  GET /posts
+
+  Spring does:
+
+  Filter Chain
+      ↓
+  Restore SecurityContext
+      ↓
+  Found John
+      ↓
+  Allow request
+
+  No database lookup.
+
+  What happens if John explicitly submits the login form again?
+  POST /login
+  email=john@gmail.com
+  password=1234
+
+  Spring treats it as a fresh login attempt:
+
+  UsernamePasswordAuthenticationFilter
+      ↓
+  AuthenticationManager
+      ↓
+  Password Check
+
+  Even if John was already logged in.
+
+  The key distinction
+
+  Every request:
+
+  Check/restore SecurityContext
+
+  Only login requests (or other authentication flows):
+
+  Call AuthenticationManager
+
+  So the check of the existing authenticated user happens on every secured request,
+  while the expensive authentication process (database lookup + password verification)
+  only happens when authentication is actually being performed.
