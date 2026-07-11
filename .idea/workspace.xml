@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Upto Basic authenticatio ndone.">
-      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Authmanager and all that.">
+      <change afterPath="$PROJECT_DIR$/demo/Images/Study/JWT/img.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="jwt" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -328,7 +328,31 @@
       <option name="project" value="LOCAL" />
       <updated>1777462839728</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Workspace added">
+      <option name="closed" value="true" />
+      <created>1783767920435</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1783767920436</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Authmanager and all that.">
+      <option name="closed" value="true" />
+      <created>1783767939146</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1783767939146</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Authmanager and all that.">
+      <option name="closed" value="true" />
+      <created>1783768080816</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1783768080816</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -349,6 +373,8 @@
     <MESSAGE value="Added Main app loc." />
     <MESSAGE value="Basic Authentication done." />
     <MESSAGE value="Upto Basic authenticatio ndone." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upto Basic authenticatio ndone." />
+    <MESSAGE value="Workspace added" />
+    <MESSAGE value="Authmanager and all that." />
+    <option name="LAST_COMMIT_MESSAGE" value="Authmanager and all that." />
   </component>
 </project>
