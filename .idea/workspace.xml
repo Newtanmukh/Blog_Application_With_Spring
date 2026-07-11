@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Upto Basic authenticatio ndone.">
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Authentication">
       <change beforePath="$PROJECT_DIR$/demo/Images/Study/JWT/JWT.txt" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/JWT/JWT.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -330,7 +330,31 @@
       <option name="project" value="LOCAL" />
       <updated>1777462839728</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Authentication">
+      <option name="closed" value="true" />
+      <created>1783770528789</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1783770528789</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Authentication">
+      <option name="closed" value="true" />
+      <created>1783775069187</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1783775069187</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Authentication">
+      <option name="closed" value="true" />
+      <created>1783775431222</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1783775431222</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -351,6 +375,7 @@
     <MESSAGE value="Added Main app loc." />
     <MESSAGE value="Basic Authentication done." />
     <MESSAGE value="Upto Basic authenticatio ndone." />
-    <option name="LAST_COMMIT_MESSAGE" value="Upto Basic authenticatio ndone." />
+    <MESSAGE value="Authentication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Authentication" />
   </component>
 </project>
