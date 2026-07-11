@@ -44,7 +44,7 @@ user tries to access a protected resource.
                     5) set spring security (set authentication -> Spring security).
 
 
-* Create JWT Auth response : token, user details etc.
+* Create JWT Auth response : token, user details etc.(Data which we send in response basically).
 * Configure JWT in Security Config.
 * Create Login API To return token. : thats it, if correct username and password then token will be
  returned otherwise it will throw exception.
