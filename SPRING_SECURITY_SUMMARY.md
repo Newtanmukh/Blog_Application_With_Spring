@@ -168,6 +168,64 @@ That means:
   - `/api/posts` and `/api/posts/**` are permitted without authentication
   - all other requests must be authenticated
 
+## Login and register request flow in this project
+
+The new auth endpoints follow the same Spring Security path as the rest of the app.
+
+### 1. Register request flow
+
+When a client sends a request to POST /api/v1/auth/register:
+
+1. The request first reaches the Spring MVC dispatcher layer.
+2. The dispatcher finds the controller method in AuthController.registerUser(...).
+3. AuthController calls UserService.createUser(...).
+4. UserServiceImpl.createUser(...) maps the incoming UserDto to a User entity, encodes the password using PasswordEncoder, assigns a default ROLE_USER, and saves the user through UserRepo.
+5. Because SecurityConfig permits /api/v1/auth/**, this request is not blocked by authentication rules.
+6. The response comes back as an ApiResponse with a success message.
+
+The important classes involved in this path are:
+- AuthController -> entry point for the API
+- UserServiceImpl -> business logic for user creation
+- PasswordEncoder -> hashes the password before saving
+- UserRepo -> saves the user to the database
+- RoleRepo -> creates or reuses the default USER role
+
+### 2. Login request flow
+
+When a client sends a request to POST /api/v1/auth/login:
+
+1. The request first reaches the Spring MVC dispatcher.
+2. The dispatcher routes it to AuthController.loginUser(...).
+3. The controller creates a UsernamePasswordAuthenticationToken with the submitted email and password.
+4. AuthController passes that token to AuthenticationManager.authenticate(...).
+5. Spring Security uses DaoAuthenticationProvider internally.
+6. DaoAuthenticationProvider calls CustomUserDetailService.loadUserByUsername(...).
+7. CustomUserDetailService uses UserRepo.findFirstByEmail(...) to load the user from the database.
+8. The loaded User object implements UserDetails, so Spring can read its username, password, and authorities.
+9. Spring Security compares the raw password with the stored hash using PasswordEncoder.matches(...).
+10. If the password matches, authentication succeeds.
+11. The authenticated object is stored in the SecurityContext and also attached to the HTTP session.
+12. The controller returns a success response.
+
+The full flow is:
+- HttpServletRequest -> DispatcherServlet -> AuthController
+- AuthController -> AuthenticationManager
+- AuthenticationManager -> DaoAuthenticationProvider
+- DaoAuthenticationProvider -> CustomUserDetailService.loadUserByUsername(...)
+- CustomUserDetailService -> UserRepo.findFirstByEmail(...)
+- PasswordEncoder.matches(...) -> password validation
+- SecurityContextHolder / HttpSession -> session-based authentication state
+
+### 3. Why the request goes through these classes
+
+This is the same pattern used throughout the project:
+- Authentication answers: "Who are you?"
+- Authorization answers: "What are you allowed to do?"
+
+For login and register, the request path is intentionally simple:
+- register uses the controller + service layer
+- login uses the controller + authentication manager + user-details service + password encoder
+
 ## Summary for a beginner
 
 1. User sends a login request with email and password.

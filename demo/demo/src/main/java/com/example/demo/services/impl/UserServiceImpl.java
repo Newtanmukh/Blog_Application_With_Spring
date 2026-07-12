@@ -1,8 +1,10 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.payloads.dtos.UserDto;
+import com.example.demo.repositories.RoleRepo;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -20,6 +24,9 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
 
     @Autowired
+    private RoleRepo roleRepo;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -27,8 +34,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto dto) {
+        if (userRepo.findFirstByEmail(dto.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("User with this email already exists");
+        }
+
         User user = dtoToUser(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        Role userRole = roleRepo.findAll().stream()
+                .filter(role -> "USER".equalsIgnoreCase(role.getName()))
+                .findFirst()
+                .orElseGet(() -> {
+                    Role role = new Role();
+                    role.setName("USER");
+                    return roleRepo.save(role);
+                });
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        user.setRoles(roles);
+
         User savedUser = this.userRepo.save(user);
         return userToDto(savedUser);
     }
