@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="JWT Auth done." />
+    <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="afterPath added.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -369,7 +371,15 @@
       <option name="project" value="LOCAL" />
       <updated>1783858752420</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="afterPath added.">
+      <option name="closed" value="true" />
+      <created>1783864350703</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1783864350703</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -403,6 +413,7 @@
     <MESSAGE value="Upto Basic authenticatio ndone." />
     <MESSAGE value="Authentication" />
     <MESSAGE value="JWT Auth done." />
-    <option name="LAST_COMMIT_MESSAGE" value="JWT Auth done." />
+    <MESSAGE value="afterPath added." />
+    <option name="LAST_COMMIT_MESSAGE" value="afterPath added." />
   </component>
 </project>

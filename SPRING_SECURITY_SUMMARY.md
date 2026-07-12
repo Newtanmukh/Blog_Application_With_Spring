@@ -165,15 +165,290 @@ That means:
 9. If the password matches, authentication succeeds.
 10. If not, authentication fails.
 
-## Next steps for this project
+## JWT Authentication in this Project
 
-To make `getAuthorities()` actually matter, you can add role-based authorization rules, for example:
+This project uses **JWT (JSON Web Token)** authentication instead of traditional session-based authentication. This is a stateless approach.
 
-- `.hasRole("ADMIN")`
-- `@PreAuthorize("hasAuthority('ROLE_ADMIN')")`
+### Key JWT Files
 
-This will make Spring Security enforce permissions based on the roles returned by `getAuthorities()`.
+- `JwtTokenHelper.java` - Generates and validates JWT tokens
+- `JwtAuthenticationFilter.java` - Intercepts requests and validates tokens
+- `JwtAuthRequest.java` - Request body for login (username + password)
+- `JwtAuthResponse.java` - Response body with the JWT token
+- `JwtAuthenticationEntryPoint.java` - Handles authentication errors
+
+### What is JWT?
+
+A JWT token is a signed string that contains:
+- **Header**: type and algorithm (HS512 in this project)
+- **Payload**: claims like subject (email), issued time, expiration time
+- **Signature**: HMAC-SHA512 signature using a secret key
+
+Example: `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaWF0IjoxNjcwODc5MzAwLCJleHAiOjE2NzA4OTcwMDB9.signature...`
+
+The token is **signed but not encrypted**, so anyone can read it but cannot modify it (signature will break).
 
 ---
 
-This summary should help a newcomer understand the basic Spring Security flow used in this project and how your code pieces fit together.
+## SCENARIO 1: First-Time User Login
+
+### What Happens Step-by-Step
+
+```
+User submits login form
+        ↓
+POST /api/v1/auth/login with { username: "user@example.com", password: "myPassword" }
+        ↓
+AuthController.createToken() is called
+        ↓
+authenticate(username, password) is called
+        ↓
+UsernamePasswordAuthenticationToken is created (username=email, password=plaintext)
+        ↓
+authenticationManager.authenticate(token) is called
+        ↓
+Spring delegates to DaoAuthenticationProvider
+        ↓
+CustomUserDetailService.loadUserByUsername(email) is called
+        ↓
+UserRepo.findFirstByEmail(email) queries the database
+        ↓
+User entity is returned (must implement UserDetails)
+        ↓
+BCryptPasswordEncoder.matches(submittedPassword, storedHash) compares passwords
+        ↓
+If match succeeds → Authentication is successful
+        ↓
+UserDetails object is available in AuthController
+        ↓
+JwtTokenHelper.generateToken(userDetails) creates JWT token with:
+  - Subject: email (extracted from userDetails.getUsername())
+  - IssuedAt: current timestamp
+  - Expiration: 5 hours from now (JWT_TOKEN_VALIDITY = 5*60*60)
+  - Signature: HMAC-SHA512(header.payload, SECRET)
+        ↓
+JwtAuthResponse { token: "eyJhbGciOi..." } is sent back to client
+        ↓
+Client stores the token (usually in localStorage or sessionStorage)
+```
+
+### Why No SecurityContext is Persisted
+
+In your `SecurityConfig.java`, you have:
+
+```java
+.sessionManagement(session -> session
+    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+)
+```
+
+**STATELESS** means:
+- Spring does NOT create a `HttpSession` on the server
+- Spring does NOT store session data in memory or a database
+- The token itself is the authentication proof
+- Every request must include the token
+
+### Important: Password Hashing Issue
+
+Currently, `UserServiceImpl.createUser()` saves the password as plain text. To make login work correctly, the password must be hashed when the user is created:
+
+```java
+user.setPassword(passwordEncoder.encode(dto.getPassword()));
+```
+
+Without this, `BCryptPasswordEncoder.matches()` will always fail during login.
+
+---
+
+## SCENARIO 2: User Logs In Again (Already Has a Token)
+
+### What Happens
+
+```
+User sends another login request with credentials
+        ↓
+POST /api/v1/auth/login with { username: "user@example.com", password: "myPassword" }
+        ↓
+Identical to SCENARIO 1: authenticate(), load user, compare password, generate JWT
+        ↓
+A NEW JWT token is generated (same email, new timestamp, new expiration)
+        ↓
+New token is sent back to client
+        ↓
+Old token is STILL VALID (until it expires in 5 hours) - there's no way to revoke it
+```
+
+### Key Difference from Sessions
+
+- **Session-based**: Logging in again overwrites the session, old session is invalid
+- **JWT-based**: Both tokens are valid simultaneously until they expire
+- There's no conflict or issue with having multiple valid tokens
+
+### Practical Impact
+
+If a user logs in multiple times (different devices, browser tabs, etc.), they get multiple tokens. Each token works independently. This is actually useful for multi-device scenarios.
+
+If you want to prevent this (e.g., "only one login per user"), you would need:
+- A **token blacklist** (database of revoked tokens)
+- Or a **token refresh mechanism** that invalidates old tokens
+- These are **not implemented** in your current project
+
+---
+
+## SCENARIO 3: User Accesses Another API After Login
+
+### Request Flow
+
+```
+User is now logged in with a JWT token
+        ↓
+User makes a request to /api/v1/posts (or any protected endpoint)
+        ↓
+Request includes header: Authorization: Bearer eyJhbGciOi...
+        ↓
+SecurityFilterChain is applied to the request
+        ↓
+JwtAuthenticationFilter.doFilterInternal() is called (added BEFORE UsernamePasswordAuthenticationFilter)
+        ↓
+Filter extracts the "Authorization" header
+        ↓
+Checks if header starts with "Bearer "
+        ↓
+Extracts token by removing "Bearer " prefix: token = requestTokenHeader.substring(7)
+        ↓
+JwtTokenHelper.getUsernameFromToken(token) parses the token signature and extracts the subject (email)
+        ↓
+Checks if username is not null and SecurityContext has no existing Authentication
+        ↓
+UserDetailsService.loadUserByUsername(username) loads the user from database
+        ↓
+JwtTokenHelper.validateToken(token, userDetails) performs two checks:
+  1. Username in token matches userDetails.getUsername() ✓
+  2. Token not expired (expiration date is in the future) ✓
+        ↓
+If both checks pass:
+  - Creates UsernamePasswordAuthenticationToken with:
+    * principal: userDetails
+    * credentials: null (not needed, already authenticated)
+    * authorities: userDetails.getAuthorities() (user's roles)
+  - Sets authentication details from the request
+  - Sets this token in SecurityContextHolder.getContext()
+        ↓
+Request proceeds to the controller
+        ↓
+Controller can access Authentication from SecurityContext:
+  @Autowired private Authentication auth;  or  SecurityContextHolder.getContext().getAuthentication()
+        ↓
+Controller processes the request and returns response
+        ↓
+SecurityContext is CLEARED (because STATELESS mode clears context after each request)
+        ↓
+Response is sent to client
+```
+
+### Token Validation Errors
+
+If any validation fails, the request continues to the next filter. If no filter sets authentication:
+
+```
+Request reaches the endpoint
+        ↓
+@Autowired private Authentication auth → null or throws exception
+        ↓
+Or endpoint has @PreAuthorize → throws AccessDeniedException
+        ↓
+JwtAuthenticationEntryPoint.commence() is triggered
+        ↓
+Sends 401 Unauthorized: "Access Denied"
+        ↓
+Response is sent to client
+```
+
+### Why Load User From Database Again?
+
+The token contains only the username (email). To get the user's **roles/authorities**, we must:
+1. Load the user from database
+2. Call `getAuthorities()` to get their roles
+3. Create Authentication object with these authorities
+
+This ensures authorization rules like `@PreAuthorize("hasRole('ADMIN')")` work correctly.
+
+---
+
+## Comparison: Traditional Session vs JWT
+
+| Feature | Session-Based | JWT (This Project) |
+|---------|----------------|-------------------|
+| **Storage** | Server (memory/database) | Client (browser) |
+| **Statefulness** | Stateful | Stateless |
+| **Logout** | Delete session immediately | Cannot logout (token valid until expiration) |
+| **Multiple Logins** | Overwrites old session | Multiple tokens valid simultaneously |
+| **Scalability** | Hard (need session replication) | Easy (no server state) |
+| **Token Revocation** | Immediate | Requires blacklist |
+| **Bandwidth** | Small (just session ID) | Larger (full token each request) |
+
+---
+
+## Flow Diagram Summary
+
+```
+FIRST LOGIN:
+credentials → AuthController → authenticate → Database → GenerateToken → JwtResponse
+
+SECOND LOGIN:
+credentials → AuthController → authenticate → Database → GenerateToken → JwtResponse (new token, old still valid)
+
+ACCESS API:
+Authorization Header with Token → JwtAuthenticationFilter → ValidateToken → LoadUser → SetSecurityContext → Controller → Response
+```
+
+---
+
+## Common Issues & Solutions
+
+### Issue 1: Login Works but Other APIs Return 401
+
+**Cause**: Client not sending token in Authorization header
+
+**Solution**: Ensure your client includes:
+```
+Authorization: Bearer <your-jwt-token>
+```
+
+### Issue 2: Login Fails Immediately
+
+**Cause**: Password not hashed when user was created
+
+**Solution**: Encode password before saving user:
+```java
+user.setPassword(passwordEncoder.encode(dto.getPassword()));
+userRepo.save(user);
+```
+
+### Issue 3: Token Expires and User Can't Access API
+
+**Current behavior**: User gets 401 error
+
+**Future enhancement**: Implement a refresh token mechanism to get a new access token without re-logging in.
+
+### Issue 4: User Logs Out but Token Still Works
+
+**Current behavior**: Token remains valid until expiration (5 hours)
+
+**Future enhancement**: Implement a token blacklist to invalidate tokens immediately upon logout.
+
+---
+
+## Next Steps for This Project
+
+To make the JWT system more production-ready:
+
+1. **Fix password hashing** - Use `passwordEncoder.encode()` in UserServiceImpl
+2. **Add token refresh** - Create a `/refresh` endpoint to get a new token before expiration
+3. **Add logout** - Implement token blacklist or use short-lived tokens with refresh tokens
+4. **Add role-based authorization** - Use `@PreAuthorize("hasRole('ADMIN')")` on endpoints
+5. **Add token claims** - Store user ID, roles, permissions in the token itself to avoid database queries
+
+---
+
+This summary should help you understand JWT authentication and how your project's security flow works at each step.
