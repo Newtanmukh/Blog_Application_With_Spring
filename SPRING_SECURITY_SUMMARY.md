@@ -75,10 +75,10 @@ It is written for a beginner and explains step-by-step what happens during authe
     - If matching succeeds, the user is authenticated and stored in the `SecurityContext`.
 
 13. After authentication, authorization is checked.
-    - Spring Security now checks whether the authenticated user has the required roles.
-    - In this project, `UserController` is protected with `@PreAuthorize("hasRole('ADMIN')")`.
-    - Other controllers such as `PostController`, `CategoryController`, and `CommentController` use `@PreAuthorize("hasRole('USER')")`.
-    - If the user does not have the required role, access is denied with a 403 response.
+    - Spring Security now checks whether the authenticated user has the required roles and any extra domain rules.
+    - In this project, `UserController` is protected with a custom expression that requires both `ADMIN` and an email ending with `@gmail.com`.
+    - Other controllers such as `PostController`, `CategoryController`, and `CommentController` still use `@PreAuthorize("hasRole('USER')")`.
+    - If the user does not satisfy the rule, access is denied with a 403 response.
 
 ## How `BCryptPasswordEncoder` works
 
@@ -147,13 +147,13 @@ In this project, the security configuration now allows public access to posts an
 And controllers use annotations like:
 
 ```java
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("@securityAuthorizationService.canAccessAdminUsers(authentication)")
 @PreAuthorize("hasRole('USER')")
 ```
 
 That means:
 - authenticated users can access the app
-- only users with the required role can access specific controllers
+- only users with the required role and custom business rule can access specific controllers
 - `getAuthorities()` is now used by Spring Security to evaluate authorization
 
 ## What is `SecurityFilterChain`?
@@ -188,7 +188,7 @@ That means:
 
 Role-based authorization is now applied using modern Spring Security practices:
 
-- `UserController` requires `ADMIN`
+- `UserController` requires `ADMIN` and an email ending with `@gmail.com`
 - `PostController`, `CategoryController`, and `CommentController` require `USER`
 - Authorities are prefixed with `ROLE_` in `User.getAuthorities()` so `hasRole('ADMIN')` and `hasRole('USER')` work correctly
 
