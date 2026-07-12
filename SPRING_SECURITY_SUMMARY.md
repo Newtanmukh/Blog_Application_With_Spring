@@ -7,8 +7,10 @@ It is written for a beginner and explains step-by-step what happens during authe
 
 - `demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java`
   - configures Spring Security using `SecurityFilterChain`
+  - enables method security with `@EnableMethodSecurity`
   - defines a `PasswordEncoder` bean (`BCryptPasswordEncoder`)
-  - permits `/api/posts` and `/api/posts/**` without authentication
+  - allows public access to `/api/posts` and `/api/posts/**`
+  - uses role-based authorization rules through method annotations
 - `demo/demo/src/main/java/com/example/demo/services/impl/CustomUserDetailService.java`
   - implements `UserDetailsService`
   - loads user data from the database by email
@@ -72,6 +74,12 @@ It is written for a beginner and explains step-by-step what happens during authe
     - If matching fails, login is rejected.
     - If matching succeeds, the user is authenticated and stored in the `SecurityContext`.
 
+13. After authentication, authorization is checked.
+    - Spring Security now checks whether the authenticated user has the required roles.
+    - In this project, `UserController` is protected with `@PreAuthorize("hasRole('ADMIN')")`.
+    - Other controllers such as `PostController`, `CategoryController`, and `CommentController` use `@PreAuthorize("hasRole('USER')")`.
+    - If the user does not have the required role, access is denied with a 403 response.
+
 ## How `BCryptPasswordEncoder` works
 
 - `BCryptPasswordEncoder` hashes passwords with BCrypt.
@@ -127,18 +135,26 @@ So the method names are important, not the field names.
 - `getAuthorities()` returns roles or permissions.
   - In your `User` class, it converts each `Role` into a `SimpleGrantedAuthority`.
 
-In this project, your security configuration currently only requires authentication:
+In this project, the security configuration now allows public access to posts and applies role-based checks for other endpoints:
 
 ```java
 .authorizeHttpRequests(auth -> auth
+    .requestMatchers("/api/posts", "/api/posts/**").permitAll()
     .anyRequest().authenticated()
 )
 ```
 
+And controllers use annotations like:
+
+```java
+@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('USER')")
+```
+
 That means:
-- any authenticated user can access the app
-- role-based checks are not enforced yet
-- `getAuthorities()` is still stored in the security context and can be used later
+- authenticated users can access the app
+- only users with the required role can access specific controllers
+- `getAuthorities()` is now used by Spring Security to evaluate authorization
 
 ## What is `SecurityFilterChain`?
 
@@ -163,16 +179,22 @@ That means:
 7. Spring reads the stored password from `getPassword()`.
 8. Spring compares the submitted password with the hashed password using `BCryptPasswordEncoder`.
 9. If the password matches, authentication succeeds.
-10. If not, authentication fails.
+10. Spring stores the authenticated principal in the `SecurityContext`.
+11. The request then moves through authorization checks.
+12. If the user has the required role, the controller method runs.
+13. If not, Spring denies access with a 403 Forbidden response.
 
-## Next steps for this project
+## Current authorization setup in this project
 
-To make `getAuthorities()` actually matter, you can add role-based authorization rules, for example:
+Role-based authorization is now applied using modern Spring Security practices:
 
-- `.hasRole("ADMIN")`
-- `@PreAuthorize("hasAuthority('ROLE_ADMIN')")`
+- `UserController` requires `ADMIN`
+- `PostController`, `CategoryController`, and `CommentController` require `USER`
+- Authorities are prefixed with `ROLE_` in `User.getAuthorities()` so `hasRole('ADMIN')` and `hasRole('USER')` work correctly
 
-This will make Spring Security enforce permissions based on the roles returned by `getAuthorities()`.
+This is the core idea:
+- authentication answers “Who are you?”
+- authorization answers “What are you allowed to do?”
 
 ---
 
