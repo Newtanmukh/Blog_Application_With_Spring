@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ffeab2b-b082-4f39-8383-475b4cc82489" name="Changes" comment="Authentication">
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtTokenHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/Images/Study/JWT/JWT.txt" beforeDir="false" afterPath="$PROJECT_DIR$/demo/Images/Study/JWT/JWT.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationEntryPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/security/JwtAuthenticationFilter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +47,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/demo/Images/Study/JWT/JWT.txt" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/demo/demo/src/main/java/com/example/demo/payloads/dtos/PostDto.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/demo/demo/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -368,6 +371,17 @@
     </task>
     <option name="localTasksCounter" value="27" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added specs" />
