@@ -318,6 +318,134 @@ Without this, `BCryptPasswordEncoder.matches()` will always fail during login.
 
 ---
 
+## User Registration Endpoint
+
+A `/register` endpoint has been added to allow new users to create an account.
+
+### Endpoint Details
+
+**URL**: `POST /api/v1/auth/register`
+
+**Request Body**:
+```json
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "securePassword123",
+    "about": "I love blogging!"
+}
+```
+
+**Validation**:
+- `name`: Required, not empty
+- `email`: Required, must be valid email format, minimum 4 characters
+- `password`: Required, 3-30 characters
+- `about`: Required, not empty
+
+**Response (Success - 201 Created)**:
+```json
+{
+    "message": "User registered successfully!!",
+    "success": true
+}
+```
+
+**Response (Error - 400 Bad Request)**:
+```json
+{
+    "message": "Error registering user: [error details]",
+    "success": false
+}
+```
+
+---
+
+### Registration Flow (Step-by-Step)
+
+```
+User submits registration form
+        ↓
+POST /api/v1/auth/register with { name, email, password, about }
+        ↓
+SecurityFilterChain applies filters
+        ↓
+JwtAuthenticationFilter runs but finds no token (new user, no token yet!)
+        ↓
+AuthorizeHttpRequests checks: Is /api/v1/auth/register in permitAll list?
+        ↓
+YES! → Allow request through WITHOUT requiring authentication
+        ↓
+Request reaches AuthController.registerUser()
+        ↓
+@Valid annotation validates UserDto:
+  - name is not empty
+  - email is valid email format
+  - password is 3-30 characters
+  - about is not empty
+        ↓
+If validation fails → Return 400 Bad Request with validation errors
+        ↓
+If validation passes:
+  UserService.createUser(userDto) is called
+        ↓
+UserServiceImpl.createUser() performs:
+  1. Map UserDto to User entity
+  2. Encode password using BCryptPasswordEncoder.encode()
+  3. Save User to database
+  4. Return UserDto
+        ↓
+Return 201 Created with success message
+        ↓
+User account is now ready for login
+```
+
+### Why Registration is Public (No Authentication Required)
+
+Registration endpoint is configured with `.permitAll()` in SecurityConfig because:
+
+1. **New users don't have tokens** - They can't authenticate yet
+2. **Entry point to the system** - Must be accessible for account creation
+3. **Common security practice** - Registration is always public
+4. **Protection via validation** - Input validation prevents malicious registrations
+
+### Important Notes
+
+✅ **Password is hashed** - UserServiceImpl uses `passwordEncoder.encode()` during registration
+
+✅ **Duplicate email prevention** - If email already exists, the database constraint will prevent duplicate registration
+
+❌ **No automatic login after registration** - User must call `/login` endpoint with credentials to get JWT token
+
+❌ **No email verification** - Current implementation doesn't verify email addresses
+
+✅ **Roles are NOT assigned during registration** - User gets default roles (if configured); admin must assign other roles
+
+### Comparison: Registration vs Login
+
+| Step | Registration | Login |
+|------|--------------|-------|
+| URL | `/api/v1/auth/register` | `/api/v1/auth/login` |
+| Request Body | name, email, password, about | username (email), password |
+| Authentication | None (permitAll) | None (permitAll) |
+| Database Operation | INSERT new User | SELECT existing User |
+| Password Handling | Hashed and stored | Compared with stored hash |
+| Response | Success/error message | JWT token |
+| Next Step | User must login | User has JWT token, can access APIs |
+
+### Complete User Journey
+
+```
+1. NEW USER → POST /api/v1/auth/register → User created in database
+                                           ↓
+2. USER → POST /api/v1/auth/login → Authentication succeeds → JWT token issued
+                                   ↓
+3. USER → GET /api/v1/posts with Authorization: Bearer <token> → Can access protected endpoints
+                                                                ↓
+4. USER → POST /api/v1/posts/add with Authorization: Bearer <token> → Can create posts
+```
+
+---
+
 ## SCENARIO 2: User Logs In Again (Already Has a Token)
 
 ### What Happens
