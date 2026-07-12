@@ -5,6 +5,8 @@ import com.example.demo.payloads.dtos.PostDto;
 import com.example.demo.payloads.dtos.PostResponse;
 import com.example.demo.services.FileService;
 import com.example.demo.services.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "Posts", description = "Post management APIs")
 @PreAuthorize("hasRole('USER')")
 public class PostController {
 
@@ -35,6 +38,7 @@ public class PostController {
     private String path;
 
     //create post
+    @Operation(summary = "Create post", description = "Create a new post for a user in a category")
     @PostMapping("/user/{userId}/category/{categoryId}/posts")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto,
                                               @PathVariable Long userId,
@@ -46,12 +50,14 @@ public class PostController {
 
 
     // get by user
+    @Operation(summary = "Get post by user", description = "Retrieve posts for a specific user")
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<PostDto> getPostByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(postService.getPostById(userId), HttpStatus.OK);
     }
 
     // get by category
+    @Operation(summary = "Get posts by category", description = "Retrieve posts belonging to a category")
     @GetMapping("/category/{categoryId}/posts")
     public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Long categoryId) {
 
@@ -61,6 +67,7 @@ public class PostController {
     }
 
     // get all posts
+    @Operation(summary = "Get all posts", description = "Retrieve all posts with pagination and sorting")
     @GetMapping("/")
     public ResponseEntity<PostResponse> getAllPost(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
@@ -73,6 +80,7 @@ public class PostController {
     }
 
     // get post details by id
+    @Operation(summary = "Get post by ID", description = "Retrieve a specific post by ID")
     @GetMapping("/posts/{postId}")
     public ResponseEntity<PostDto> getPostByPostId(@PathVariable Long postId) {
 
@@ -82,6 +90,7 @@ public class PostController {
 
 
     // delete post
+    @Operation(summary = "Delete post", description = "Delete a post by ID")
     @DeleteMapping("/posts/{postId}")
     public ApiResponse deletePost(@PathVariable Long postId) {
         this.postService.deletePost(postId);
@@ -89,6 +98,7 @@ public class PostController {
     }
 
     // update post
+    @Operation(summary = "Update post", description = "Update an existing post")
     @PutMapping("/posts/{postId}")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto,
                                               @PathVariable Long postId,
@@ -99,6 +109,7 @@ public class PostController {
     }
 
     // search
+    @Operation(summary = "Search posts", description = "Search posts by keyword")
     @GetMapping("/posts/search/{keywords}")
     public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords") String keywords) {
         List<PostDto> result = this.postService.searchPosts(keywords);
@@ -107,6 +118,7 @@ public class PostController {
 
 
     //file service
+    @Operation(summary = "Upload post image", description = "Upload an image for a post")
     @PostMapping("/post/image/upload/{postId}")
     public ResponseEntity<PostDto> uploadPostImage(@RequestParam("image") MultipartFile image,
                                                    @PathVariable Long postId) throws IOException {
@@ -120,6 +132,7 @@ public class PostController {
     }
 
     //method to serve files
+    @Operation(summary = "Download post image", description = "Serve an uploaded post image")
     @GetMapping(value = "/post/image/{imageName}",produces = MediaType.IMAGE_JPEG_VALUE)
     public void downloadImage(
             @PathVariable("imageName") String imageName,

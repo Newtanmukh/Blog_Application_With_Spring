@@ -4,6 +4,9 @@ import com.example.demo.payloads.ApiResponse;
 import com.example.demo.payloads.dtos.LoginDto;
 import com.example.demo.payloads.dtos.UserDto;
 import com.example.demo.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Authentication", description = "Login and registration APIs")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -34,6 +38,11 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Login user", description = "Authenticate a user with email and password and create a session")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Login successful"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Invalid email or password")
+    })
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> loginUser(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request) {
         try {
@@ -55,6 +64,11 @@ public class AuthController {
         }
     }
 
+    @Operation(summary = "Register user", description = "Create a new user account with encoded password and default USER role")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "User registered successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input or duplicate email")
+    })
     @PostMapping("/register")
     public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody UserDto userDto) {
         try {
