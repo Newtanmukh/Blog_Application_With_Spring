@@ -248,6 +248,64 @@ In your `SecurityConfig.java`, you have:
 - The token itself is the authentication proof
 - Every request must include the token
 
+### Why SecurityFilterChain and JwtAuthenticationFilter Are NOT Called During Login
+
+During login, the filters **ARE** called, but they don't stop or validate the request. Here's why:
+
+In your `SecurityConfig.java`:
+
+```java
+.authorizeHttpRequests(auth -> auth
+    .requestMatchers("/api/v1/auth/*", "/api/v1/auth").permitAll()  // ← This line!
+    .anyRequest().authenticated()
+)
+```
+
+The `.permitAll()` on `/api/v1/auth/*` means:
+- SecurityFilterChain **DOES** intercept the login request
+- JwtAuthenticationFilter runs but finds no JWT token (user doesn't have one yet, they're logging in!)
+- The filter chain sees: *"This endpoint needs no authentication"*
+- Request is allowed through **without validation**
+- Request reaches `AuthController.createToken()`
+
+```
+POST /api/v1/auth/login
+        ↓
+SecurityFilterChain applies all filters (including JwtAuthenticationFilter)
+        ↓
+JwtAuthenticationFilter looks for "Authorization: Bearer <token>" header
+        ↓
+NO header found (user doesn't have a token yet!)
+        ↓
+JwtAuthenticationFilter does nothing, passes request forward
+        ↓
+AuthorizeHttpRequests filter checks: Is /api/v1/auth/login in permitAll list?
+        ↓
+YES! → Allow request through WITHOUT requiring authentication
+        ↓
+Request reaches AuthController.createToken()
+        ↓
+AuthController MANUALLY calls authenticationManager.authenticate() to validate credentials
+        ↓
+If credentials valid → Generate JWT token
+        ↓
+Return token to client
+```
+
+**Comparison with Protected Endpoints:**
+
+| Scenario | Flow |
+|----------|------|
+| **Login Request** | SecurityFilterChain → permitAll rule applies → Request allowed to controller → Manual authentication in controller |
+| **Access /api/v1/posts** | SecurityFilterChain → JwtAuthenticationFilter validates token → Sets SecurityContext → Request allowed to controller |
+
+**Key Takeaway:**
+
+- Login endpoint is **explicitly whitelisted** with `.permitAll()`
+- JwtAuthenticationFilter is skipped because the endpoint doesn't require authentication
+- The controller itself performs manual authentication using `authenticationManager.authenticate()`
+- This is intentional design: the login endpoint is the **entry point** that issues tokens
+
 ### Important: Password Hashing Issue
 
 Currently, `UserServiceImpl.createUser()` saves the password as plain text. To make login work correctly, the password must be hashed when the user is created:
